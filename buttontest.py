@@ -14,6 +14,7 @@ BUTTON_PINS = {
 
 file_path_tada = '~/projects/PiMusicBoxTest/tada.wav'
 file_path_moo = '~/projects/PiMusicBoxTest/moo.wav'
+file_path_rooster = '~/projects/PiMusicBoxTest/rooster.wav'
 
 
 for pin in BUTTON_PINS:
@@ -26,6 +27,8 @@ while True:
                         print('Button {} Pressed'.format(state[0]))
                         if state[0] == 'Red':
                             system('aplay -q {}'.format(file_path_moo))
+                        elif state[0] == 'Yellow':
+                            system('aplay -q {}'.format(file_path_rooster))
                         else:
                             system('aplay -q {}'.format(file_path_tada))
         time.sleep(0.2)
