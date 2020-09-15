@@ -12,7 +12,8 @@ BUTTON_PINS = {
                 16: 'White'
                 }
 
-file_path = '~/projects/PiMusicBoxTest/tada.wav'
+file_path_tada = '~/projects/PiMusicBoxTest/tada.wav'
+file_path_moo = '~/projects/PiMusicBoxTest/moo.ogg'
 
 
 for pin in BUTTON_PINS:
@@ -23,5 +24,8 @@ while True:
         for state in input_states:
                 if state[1] == False:
                         print('Button {} Pressed'.format(state[0]))
-                        system('aplay -q {}'.format(file_path))
+                        if state[0] == 'Red':
+                            system('aplay -q {}'.format(file_path_moo))
+                        else:
+                            system('aplay -q {}'.format(file_path_tada))
         time.sleep(0.2)
