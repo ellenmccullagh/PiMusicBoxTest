@@ -13,7 +13,7 @@ BUTTON_PINS = {
                 }
 
 file_path_tada = '~/projects/PiMusicBoxTest/tada.wav'
-file_path_moo = '~/projects/PiMusicBoxTest/moo.mp3'
+file_path_moo = '~/projects/PiMusicBoxTest/moo.wav'
 
 
 for pin in BUTTON_PINS:
