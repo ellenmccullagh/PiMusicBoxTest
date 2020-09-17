@@ -27,8 +27,8 @@ def button_pressed_callback(channel):
 
 if __name__ == '__main__':
     GPIO.setmode(GPIO.BCM)
-     for pin in BUTTON_PINS:
-             GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    for pin in BUTTON_PINS:
+        GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     #GPIO.setup(BUTTON_GPIO, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     while True:
         for pin in BUTTON_PINS:
