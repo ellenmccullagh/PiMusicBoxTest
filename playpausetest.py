@@ -20,6 +20,8 @@ class Button(object):
         self.status = True #True means unpressed, False means pressed
 
     def playsound(self, channel): #if the current playlist corresponds to this button, skip to the next track. Otherwise change the playlist and begin playback
+        global currentplaylist
+        print(currentplaylist)
         if currentplaylist == self.playlist:
             client.next()
             print('{} next track'.format(self.playlist))
@@ -80,8 +82,7 @@ if __name__ == '__main__':
     client.connect("localhost", 6600)
     GPIO.setmode(GPIO.BCM)
 
-    global currentplaylist
-    currentplaylist = None
+    currentplaylist = 'testing'
 
     #setup playback buttons
     for btn in BUTTON_PINS:
