@@ -33,7 +33,7 @@ class Button(object):
 
 BUTTON_PINS = [
                 Button(5, 'Red', 'moo'),
-                Button(5, 'Blue', 'tada'),
+                Button(6, 'Blue', 'tada'),
                 Button(12, 'Green', 'Tada'),
                 Button(13, 'Yellow', 'rooster'),
                 Button(16, 'White', 'tada')
@@ -66,8 +66,6 @@ if __name__ == '__main__':
     GPIO.setmode(GPIO.BCM)
     for btn in BUTTON_PINS:
         GPIO.setup(btn.pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    #GPIO.setup(BUTTON_GPIO, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    for btn in BUTTON_PINS:
         GPIO.add_event_detect(btn.pin, GPIO.FALLING,
             callback=btn.playsound, bouncetime=50)  #button_pressed_callback
 
