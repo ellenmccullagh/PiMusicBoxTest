@@ -7,7 +7,6 @@ from os import system, path
 
 from mpd import MPDClient
 
-CP = None
 
 class Button(object):
     '''
@@ -21,7 +20,7 @@ class Button(object):
         self.status = True #True means unpressed, False means pressed
 
     def playsound(self, channel): #if the current playlist corresponds to this button, skip to the next track. Otherwise change the playlist and begin playback
-        if self.uri == CP:
+        if currentplaylist == self.playlist:
             client.next()
             print('{} next track'.format(self.playlist))
         else:
@@ -29,7 +28,8 @@ class Button(object):
             client.add(self.uri)
             client.play()
             print('{} playing'.format(self.playlist))
-            CP = self.uri
+            currentplaylist = self.playlist
+
 
         pass
 
@@ -80,6 +80,7 @@ if __name__ == '__main__':
     client.connect("localhost", 6600)
     GPIO.setmode(GPIO.BCM)
 
+    global currentplaylist = None
 
     #setup playback buttons
     for btn in BUTTON_PINS:
