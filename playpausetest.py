@@ -9,19 +9,23 @@ from mpd import MPDClient
 
 class Button(object):
     '''
-       Buttons class. Includes associated pin, sound playback and associated button color.
+       Buttons that correspond to playlists
     '''
-    def __init__(self, pin, color, playlist):
+    def __init__(self, pin, color, playlist, uri = None):
         self.pin = pin
         self.color = color
         self.playlist = playlist
-        self.uri = None
+        self.uri = uri
         self.status = True #True means unpressed, False means pressed
 
     def playsound(self, channel):
-        client.clear()
-        client.add(self.uri)
-        client.play()
+        if self.playlist == CURRENT_PLAYLIST:
+            client.next()
+        else:
+            client.clear()
+            client.add(self.uri)
+            CURRENT_PLAYLIST = self.playlist
+            client.play()
         pass
 
     def seturi(self, uri):
@@ -39,18 +43,29 @@ class Button(object):
 
 #Declare all buttons
 BUTTON_PINS = [
-                Button(6, 'Blue', 'Both Frozens'),
-                Button(12, 'Green', 'None'),
-                Button(13, 'Yellow', 'None'),
+                Button(6, 'Blue', 'Both Frozens', 'spotify:playlist:6gBXZmySP7a6n4PZJhaqYO'),
+                Button(12, 'Green', 'Miles favorites', 'spotify:playlist:1eKf1Q2I7GKi3BfHTNL4Dt'),
+                Button(13, 'Yellow', 'Lullabies for Miles', 'spotify:playlist:22xETQTI3B6RzEdgBqPqXS'),
                 Button(16, 'White', 'None')
                 ]
+
+'''
+Declare pause/resume toggle button pin and callback function
+'''
 STOP_BUTTON = 5
 def stopcallback(channel):
-    client.pause()
-    client.close()
-    client.disconnect()
+    if client.status()['state'] == 'play': #playlist is already playing
+        client.pause()
+    elif client.status()['state'] == 'pause': #playlist is paused
+        client.play()
+    else: #playlist is stopped
+        pass
+    #client.close()
+    #client.disconnect()
 
-BUTTON_PINS[0].seturi('spotify:playlist:6gBXZmySP7a6n4PZJhaqYO') #Both Frozens Playlist
+# BUTTON_PINS[0].seturi('spotify:playlist:6gBXZmySP7a6n4PZJhaqYO') #Both Frozens Playlist
+# BUTTON_PINS[1].seturi('spotify:playlist:1eKf1Q2I7GKi3BfHTNL4Dt') #Miles favorites playlists
+# BUTTON_PINS[2].seturi('spotify:playlist:22xETQTI3B6RzEdgBqPqXS') #Lullabies for Miles playlist
 
 def signal_handler(sig, frame):
     GPIO.cleanup()
@@ -60,6 +75,8 @@ if __name__ == '__main__':
     client = MPDClient()
     client.connect("localhost", 6600)
     GPIO.setmode(GPIO.BCM)
+
+    CURRENT_PLAYLIST = None
 
     #setup playback buttons
     for btn in BUTTON_PINS:
