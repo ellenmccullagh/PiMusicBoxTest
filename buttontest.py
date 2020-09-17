@@ -13,7 +13,7 @@ class Button(object):
         self.pin = pin
         self.color = color
         self.sound = sound
-        self.base_path = '~/projects/PiMusicBoxTest/'
+        self.base_path = '~/projects/PiMusicBoxTest/sounds/c'
         self.status = True #True means unpressed, False means pressed
 
     def playsound(self, channel):
@@ -48,7 +48,7 @@ if __name__ == '__main__':
 
     for btn in BUTTON_PINS:
         GPIO.setup(btn.pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.add_event_detect(btn.pin, GPIO.FALLING, btn.playsound, bouncetime=75)
+        GPIO.add_event_detect(btn.pin, GPIO.FALLING, btn.playsound, bouncetime=100)
 
     signal.signal(signal.SIGINT, signal_handler)
     signal.pause()
