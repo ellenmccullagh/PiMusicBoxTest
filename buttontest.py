@@ -67,7 +67,7 @@ if __name__ == '__main__':
     for btn in BUTTON_PINS:
         GPIO.setup(btn.pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.add_event_detect(btn.pin, GPIO.FALLING,
-            callback=btn.playsound, bouncetime=50)  #button_pressed_callback
+            btn.playsound, bouncetime=50)  #button_pressed_callback
 
     signal.signal(signal.SIGINT, signal_handler)
     signal.pause()
