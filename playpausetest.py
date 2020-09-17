@@ -7,8 +7,6 @@ from os import system, path
 
 from mpd import MPDClient
 
-#current playlist as global variable
-CURRENT_PLAYLIST = None
 
 class Button(object):
     '''
@@ -22,12 +20,11 @@ class Button(object):
         self.status = True #True means unpressed, False means pressed
 
     def playsound(self, channel):
-        if self.playlist == CURRENT_PLAYLIST:
+        if self.uri in client.playlist(): #the current playlist corresponds to this button. Skip to next track.
             client.next()
-        else:
+        else: #the current playlist does not correspond to this button, change playlist to this playlist.
             client.clear()
             client.add(self.uri)
-            CURRENT_PLAYLIST = self.playlist
             client.play()
         pass
 
