@@ -33,7 +33,7 @@ if __name__ == '__main__':
     #GPIO.setup(BUTTON_GPIO, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     for pin in BUTTON_PINS:
         GPIO.add_event_detect(pin, GPIO.FALLING,
-a            callback=button_pressed_callback, bouncetime=100) #i'm not sure how to pass the pin number to the callback function. Maybe I need to embed this in a class somehow
+            callback=button_pressed_callback, bouncetime=100) #i'm not sure how to pass the pin number to the callback function. Maybe I need to embed this in a class somehow
 
     signal.signal(signal.SIGINT, signal_handler)
     signal.pause()
