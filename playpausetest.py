@@ -19,13 +19,15 @@ class Button(object):
         self.uri = uri
         self.status = True #True means unpressed, False means pressed
 
-    def playsound(self, channel):
-        if self.uri in client.playlist(): #the current playlist corresponds to this button. Skip to next track.
+    def playsound(self, channel): #if the current playlist corresponds to this button, skip to the next track. Otherwise change the playlist and begin playback
+        if self.uri in client.playlist()[0]: #my uri is the same as the client. client.playlist() returns a list of information on the playlist. the first entry is the uri with an added space as the first character.
             client.next()
-        else: #the current playlist does not correspond to this button, change playlist to this playlist.
+            print('{} next track'.format(self.playlist))
+        else:
             client.clear()
             client.add(self.uri)
             client.play()
+            print('{} playing'.format(self.playlist))
         pass
 
     def seturi(self, uri):
@@ -56,8 +58,10 @@ STOP_BUTTON = 5
 def stopcallback(channel):
     if client.status()['state'] == 'play': #playlist is already playing
         client.pause()
+        print('Paused')
     elif client.status()['state'] == 'pause': #playlist is paused
         client.play()
+        print('Resumed')
     else: #playlist is stopped
         pass
     #client.close()
