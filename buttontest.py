@@ -3,7 +3,7 @@ import time
 
 import signal
 import sys
-import system
+from os import system
 
 #BUTTON_GPIO = 16
 BUTTON_PINS = {
