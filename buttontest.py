@@ -18,7 +18,7 @@ class Button(object):
         self.status = True
 
     def playsound(self, channel):
-        system('aplay -q {}'.format(slef.base_path + self.sound + '.wav'))
+        system('aplay -q {}'.format(self.base_path + self.sound + '.wav'))
         pass
 
     def updateStatus(self):
