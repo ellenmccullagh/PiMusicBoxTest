@@ -80,7 +80,8 @@ if __name__ == '__main__':
     client.connect("localhost", 6600)
     GPIO.setmode(GPIO.BCM)
 
-    global currentplaylist = None
+    global currentplaylist
+    currentplaylist = None
 
     #setup playback buttons
     for btn in BUTTON_PINS:
