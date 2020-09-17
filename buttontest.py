@@ -14,7 +14,7 @@ class Button(object):
         self.pin = pin
         self.color = color
         self.sound = sound
-        self.basepath = '~/projects/PiMusicBoxTest/'
+        self.base_path = '~/projects/PiMusicBoxTest/'
         self.status = True
 
     def playsound(self, channel):
