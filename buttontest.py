@@ -6,8 +6,11 @@ import sys
 from os import system, path
 
 #BUTTON_GPIO = 16
-class Button:
-    __init__(self, pin, color, sound):
+class Button(object):
+    '''
+       Buttons. What they look like, what they do, where they are etc.
+    '''
+    def __init__(self, pin, color, sound):
         self.pin = pin
         self.color = color
         self.sound = sound
