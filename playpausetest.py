@@ -21,7 +21,7 @@ class Button(object):
 
     def playsound(self, channel): #if the current playlist corresponds to this button, skip to the next track. Otherwise change the playlist and begin playback
         global currentplaylist
-        print(currentplaylist)
+        #print(currentplaylist)
         if currentplaylist == self.playlist:
             client.next()
             print('{} next track'.format(self.playlist))
@@ -79,10 +79,10 @@ def signal_handler(sig, frame):
 
 if __name__ == '__main__':
     client = MPDClient()
-    client.connect("localhost", 6600)
+    client.connect("localhost", 6680)
     GPIO.setmode(GPIO.BCM)
 
-    currentplaylist = 'testing'
+    currentplaylist = 'None'
 
     #setup playback buttons
     for btn in BUTTON_PINS:
