@@ -66,7 +66,7 @@ def stopcallback(channel):
     #client.close()
     #client.disconnect()
 
-c
+
 def signal_handler(sig, frame):
     GPIO.cleanup()
     sys.exit(0)
