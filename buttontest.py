@@ -17,7 +17,7 @@ class Button(object):
         self.basepath = '~/projects/PiMusicBoxTest/'
         self.status = True
 
-    def playsound(self):
+    def playsound(self, channel):
         system('aplay -q {}'.format(base_path + self.sound + '.wav'))
         pass
 
