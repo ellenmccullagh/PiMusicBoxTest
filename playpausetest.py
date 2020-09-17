@@ -7,6 +7,7 @@ from os import system, path
 
 from mpd import MPDClient
 
+CP = None
 
 class Button(object):
     '''
@@ -20,7 +21,7 @@ class Button(object):
         self.status = True #True means unpressed, False means pressed
 
     def playsound(self, channel): #if the current playlist corresponds to this button, skip to the next track. Otherwise change the playlist and begin playback
-        if self.uri in client.playlist()[0]: #my uri is the same as the client. client.playlist() returns a list of information on the playlist. the first entry is the uri with an added space as the first character.
+        if self.uri == CP:
             client.next()
             print('{} next track'.format(self.playlist))
         else:
@@ -28,6 +29,8 @@ class Button(object):
             client.add(self.uri)
             client.play()
             print('{} playing'.format(self.playlist))
+            CP = self.uri
+
         pass
 
     def seturi(self, uri):
@@ -48,7 +51,7 @@ BUTTON_PINS = [
                 Button(6, 'Blue', 'Both Frozens', 'spotify:playlist:6gBXZmySP7a6n4PZJhaqYO'),
                 Button(12, 'Green', 'Miles favorites', 'spotify:playlist:1eKf1Q2I7GKi3BfHTNL4Dt'),
                 Button(13, 'Yellow', 'Lullabies for Miles', 'spotify:playlist:22xETQTI3B6RzEdgBqPqXS'),
-                Button(16, 'White', 'None')
+                Button(16, 'White', 'This Is Raffi', 'spotify:playlist:37i9dQZF1DX4dWEvmDfGoP')
                 ]
 
 '''
@@ -81,11 +84,11 @@ if __name__ == '__main__':
     #setup playback buttons
     for btn in BUTTON_PINS:
         GPIO.setup(btn.pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.add_event_detect(btn.pin, GPIO.FALLING, btn.playsound, bouncetime=100)
+        GPIO.add_event_detect(btn.pin, GPIO.FALLING, btn.playsound, bouncetime=150)
 
     #setup stop button
     GPIO.setup(STOP_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.add_event_detect(STOP_BUTTON, GPIO.FALLING, stopcallback, bouncetime=100)
+    GPIO.add_event_detect(STOP_BUTTON, GPIO.FALLING, stopcallback, bouncetime=150)
 
     signal.signal(signal.SIGINT, signal_handler)
     signal.pause()
