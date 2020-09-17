@@ -22,7 +22,7 @@ def signal_handler(sig, frame):
 def button_pressed_callback(channel):
     for pin in BUTTON_PINS:
         if GPIO.input(pin) == False:
-            system('aplay -q {}'.format(file_path_moo + BUTTON_PINS[pin] + '.wav'))
+            system('aplay -q {}'.format(base_path + BUTTON_PINS[pin] + '.wav'))
             print("Button {} pressed!".format(pin))
             break
 
