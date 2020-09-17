@@ -41,6 +41,9 @@ class Button(object):
     def reportColor(self):
         return self.color
 
+#current playlist as global variable
+CURRENT_PLAYLIST = None
+
 #Declare all buttons
 BUTTON_PINS = [
                 Button(6, 'Blue', 'Both Frozens', 'spotify:playlist:6gBXZmySP7a6n4PZJhaqYO'),
@@ -63,10 +66,7 @@ def stopcallback(channel):
     #client.close()
     #client.disconnect()
 
-# BUTTON_PINS[0].seturi('spotify:playlist:6gBXZmySP7a6n4PZJhaqYO') #Both Frozens Playlist
-# BUTTON_PINS[1].seturi('spotify:playlist:1eKf1Q2I7GKi3BfHTNL4Dt') #Miles favorites playlists
-# BUTTON_PINS[2].seturi('spotify:playlist:22xETQTI3B6RzEdgBqPqXS') #Lullabies for Miles playlist
-
+c
 def signal_handler(sig, frame):
     GPIO.cleanup()
     sys.exit(0)
@@ -76,7 +76,6 @@ if __name__ == '__main__':
     client.connect("localhost", 6600)
     GPIO.setmode(GPIO.BCM)
 
-    CURRENT_PLAYLIST = None
 
     #setup playback buttons
     for btn in BUTTON_PINS:
