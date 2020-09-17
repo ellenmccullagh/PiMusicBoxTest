@@ -7,6 +7,9 @@ from os import system, path
 
 from mpd import MPDClient
 
+#current playlist as global variable
+CURRENT_PLAYLIST = None
+
 class Button(object):
     '''
        Buttons that correspond to playlists
@@ -40,9 +43,6 @@ class Button(object):
 
     def reportColor(self):
         return self.color
-
-#current playlist as global variable
-CURRENT_PLAYLIST = None
 
 #Declare all buttons
 BUTTON_PINS = [
