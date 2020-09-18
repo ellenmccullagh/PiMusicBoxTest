@@ -85,7 +85,7 @@ if __name__ == '__main__':
     client = MPDClient()
     client.connect("localhost", 6600)
 
-    pinging = threading.Thread(target=clientPing)
+    pinging = Thread(target=clientPing)
     pinging.start()
 
     GPIO.setmode(GPIO.BCM)
