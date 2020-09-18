@@ -21,7 +21,10 @@ class Button(object):
 
     def playsound(self, channel): #if the current playlist corresponds to this button, skip to the next track. Otherwise change the playlist and begin playback
         global currentplaylist
-        #print(currentplaylist)
+
+        client = MPDClient()
+        client.connect("localhost", 6600)
+
         if currentplaylist == self.playlist:
             client.next()
             print('{} next track'.format(self.playlist))
@@ -32,6 +35,8 @@ class Button(object):
             print('{} playing'.format(self.playlist))
             currentplaylist = self.playlist
 
+        client.close()
+        client.disconnect()
 
         pass
 
@@ -61,6 +66,9 @@ Declare pause/resume toggle button pin and callback function
 '''
 STOP_BUTTON = 5
 def stopcallback(channel):
+    client = MPDClient()
+    client.connect("localhost", 6600)
+
     if client.status()['state'] == 'play': #playlist is already playing
         client.pause()
         print('Paused')
@@ -69,8 +77,8 @@ def stopcallback(channel):
         print('Resumed')
     else: #playlist is stopped
         pass
-    #client.close()
-    #client.disconnect()
+    client.close()
+    client.disconnect()
 
 
 def signal_handler(sig, frame):
@@ -78,8 +86,7 @@ def signal_handler(sig, frame):
     sys.exit(0)
 
 if __name__ == '__main__':
-    client = MPDClient()
-    client.connect("localhost", 6680)
+
     GPIO.setmode(GPIO.BCM)
 
     currentplaylist = 'None'
