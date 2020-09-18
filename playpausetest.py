@@ -7,6 +7,8 @@ from os import system, path
 
 from mpd import MPDClient
 
+from threading import Thread
+
 
 class Button(object):
     '''
@@ -53,7 +55,7 @@ BUTTON_PINS = [
                 Button(6, 'Blue', 'Both Frozens', 'spotify:playlist:6gBXZmySP7a6n4PZJhaqYO'),
                 Button(12, 'Green', 'Miles favorites', 'spotify:playlist:1eKf1Q2I7GKi3BfHTNL4Dt'),
                 Button(13, 'Yellow', 'Lullabies for Miles', 'spotify:playlist:22xETQTI3B6RzEdgBqPqXS'),
-                Button(16, 'White', 'This Is Raffi', 'spotify:playlist:37i9dQZF1DX4dWEvmDfGoP')
+                Button(16, 'White', 'Playtime for Miles', 'spotify:playlist:3pByZu2SyYiNlIppLXbUZ7')
                 ]
 
 '''
@@ -70,7 +72,10 @@ def stopcallback(channel):
         client.play()
         print('Resumed')
 
-
+def clientPing(): #avoid client disconnect by pinging regularly.
+    while True:
+        client.ping()
+        time.sleep(10)
 
 def signal_handler(sig, frame):
     GPIO.cleanup()
@@ -79,6 +84,9 @@ def signal_handler(sig, frame):
 if __name__ == '__main__':
     client = MPDClient()
     client.connect("localhost", 6600)
+
+    pinging = threading.Thread(target=clientPing)
+    pinging.start()
 
     GPIO.setmode(GPIO.BCM)
 
