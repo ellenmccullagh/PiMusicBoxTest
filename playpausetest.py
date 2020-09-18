@@ -21,6 +21,7 @@ class Button(object):
 
     def playsound(self, channel): #if the current playlist corresponds to this button, skip to the next track. Otherwise change the playlist and begin playback
         global currentplaylist
+        print("Current playlist: {}".format(currentplaylist))
 
         client = MPDClient()
         client.connect("localhost", 6600)
@@ -75,8 +76,7 @@ def stopcallback(channel):
     elif client.status()['state'] == 'pause': #playlist is paused
         client.play()
         print('Resumed')
-    else: #playlist is stopped
-        pass
+
     client.close()
     client.disconnect()
 
