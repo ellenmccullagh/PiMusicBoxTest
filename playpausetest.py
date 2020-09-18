@@ -7,7 +7,7 @@ from mpd import MPDClient
 from threading import Thread
 import logging
 
-logging.basicConfig(level=logging.DEBUG, filename='playpausetest.log', filemode='w', format='{}(name)s - {}(levelname)s - {}(message)s')
+logging.basicConfig(level=logging.DEBUG, filename='playpausetest.log', filemode='w')
 
 class Button(object):
     '''
