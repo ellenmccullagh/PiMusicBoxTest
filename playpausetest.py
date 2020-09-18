@@ -83,7 +83,12 @@ def signal_handler(sig, frame):
 
 if __name__ == '__main__':
     client = MPDClient()
-    client.connect("localhost", 6600)
+
+    try:
+        client.connect("localhost", 6600)
+    except:
+        time.sleep(10)
+        client.connect("localhost", 6600)
 
     pinging = Thread(target=clientPing)
     pinging.start()
