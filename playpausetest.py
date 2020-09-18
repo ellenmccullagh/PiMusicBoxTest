@@ -1,14 +1,13 @@
 import RPi.GPIO as GPIO
 import time
-
 import signal
 import sys
 from os import system, path
-
 from mpd import MPDClient
-
 from threading import Thread
+import logging
 
+logging.basicConfig(level=logging.DEBUG, filename='playpausetest.log', filemode='w', format='{}(name)s - {}(levelname)s - {}(message)s')
 
 class Button(object):
     '''
@@ -23,16 +22,16 @@ class Button(object):
 
     def playsound(self, channel): #if the current playlist corresponds to this button, skip to the next track. Otherwise change the playlist and begin playback
         global currentplaylist
-        print("Current playlist: {}".format(currentplaylist))
+        logging.info("Current playlist: {}".format(currentplaylist))
 
         if currentplaylist == self.playlist:
             client.next()
-            print('{} next track'.format(self.playlist))
+            logging.info('{} next track'.format(self.playlist))
         else:
             client.clear()
             client.add(self.uri)
             client.play()
-            print('{} playing'.format(self.playlist))
+            logging.info('{} playing'.format(self.playlist))
             currentplaylist = self.playlist
 
         pass
@@ -67,10 +66,10 @@ def stopcallback(channel):
 
     if client.status()['state'] == 'play': #playlist is already playing
         client.pause()
-        print('Paused')
+        logging.info('Paused')
     elif client.status()['state'] == 'pause': #playlist is paused
         client.play()
-        print('Resumed')
+        logging.info('Resumed')
 
 def clientPing(): #avoid client disconnect by pinging regularly.
     while True:
@@ -86,9 +85,12 @@ if __name__ == '__main__':
 
     try:
         client.connect("localhost", 6600)
+        logging.debug('Connected!')
     except:
-        time.sleep(10)
+        logging.debug('First try connection failed.')
+        time.sleep(60)
         client.connect("localhost", 6600)
+        logging.debug('Second try connection success!')
 
     pinging = Thread(target=clientPing)
     pinging.start()
