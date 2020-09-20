@@ -61,6 +61,7 @@ BUTTON_PINS = [
 Declare pause/resume toggle button pin and callback function
 '''
 STOP_BUTTON = 5
+
 def stopcallback(channel):
 
 
@@ -76,11 +77,14 @@ def clientPing(): #avoid client disconnect by pinging regularly.
         client.ping()
         time.sleep(10)
 
-def signal_handler(sig, frame):
+def signal_handler(sig, frame): #used to close and cleanup GPIO and mopidy mdp client
     GPIO.cleanup()
+    client.close()
+    client.disconnect()
     sys.exit(0)
 
-if __name__ == '__main__':
+def handleButtons():
+    #global client
     client = MPDClient()
 
     try:
@@ -102,11 +106,11 @@ if __name__ == '__main__':
     #setup playback buttons
     for btn in BUTTON_PINS:
         GPIO.setup(btn.pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.add_event_detect(btn.pin, GPIO.FALLING, btn.playsound, bouncetime=150)
+        GPIO.add_event_detect(btn.pin, GPIO.FALLING, btn.playsound, bouncetime=300)
 
     #setup stop button
     GPIO.setup(STOP_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.add_event_detect(STOP_BUTTON, GPIO.FALLING, stopcallback, bouncetime=150)
+    GPIO.add_event_detect(STOP_BUTTON, GPIO.FALLING, stopcallback, bouncetime=300)
 
     signal.signal(signal.SIGINT, signal_handler)
     signal.pause()
