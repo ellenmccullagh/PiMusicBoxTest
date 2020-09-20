@@ -1,6 +1,5 @@
-import system
 import buttonhandler as bh
-from threading import Thread
+#from threading import Thread
 import RPi.GPIO as GPIO
 
 class OnOffButton:
