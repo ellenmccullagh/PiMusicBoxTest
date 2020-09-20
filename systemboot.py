@@ -9,7 +9,7 @@ class OnOffButton:
         self.on = False
 
     def onoff(self):
-        self.on = !self.on
+        self.on = not(self.on)
         if self.on:
             bh.handleButtons()
         else:
