@@ -2,11 +2,10 @@ import RPi.GPIO as GPIO
 import time
 import signal
 import sys
-from os import system, path
+#from os import system, path
 from mpd import MPDClient
 from threading import Thread
 import logging
-from os import system
 
 logging.basicConfig(level=logging.DEBUG, filename='playpausetest.log', filemode='w')
 
@@ -25,7 +24,7 @@ class Button(object):
         global currentplaylist
         logging.info("Current playlist: {}".format(currentplaylist))
 
-        if currentplaylist == self.playlist:
+        if currentplaylist == self.playlist and client.status()['nextsong'] != '0':
             client.next()
             logging.info('{} next track'.format(self.playlist))
         else:
@@ -34,11 +33,11 @@ class Button(object):
             client.play()
             logging.info('{} playing'.format(self.playlist))
             currentplaylist = self.playlist
-
         pass
 
     def seturi(self, uri):
         self.uri = uri
+        pass
 
     def updateStatus(self):
         self.status = GPIO.input(self.pin)
@@ -64,8 +63,6 @@ Declare pause/resume toggle button pin and callback function
 STOP_BUTTON = 5
 
 def stopcallback(channel):
-
-
     if client.status()['state'] == 'play': #playlist is already playing
         client.pause()
         logging.info('Paused')
@@ -80,13 +77,13 @@ def clientPing(): #avoid client disconnect by pinging regularly.
 
 def signal_handler(sig, frame): #used to close and cleanup GPIO and mopidy mdp client
     GPIO.cleanup()
+    client.pause()
     client.close()
     client.disconnect()
+    pinging.join()
     sys.exit(0)
 
 if __name__ == '__main__':
-    #pause whole thread until button at pin 4 is pushed => I won't need systemboot.py
-    #time.sleep(120)
 
     global client
     client = MPDClient()
@@ -101,6 +98,7 @@ if __name__ == '__main__':
             time.sleep(30)
 
     client.setvol(60)
+    global pinging
     pinging = Thread(target=clientPing)
     pinging.start()
 
