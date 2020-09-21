@@ -94,7 +94,7 @@ if __name__ == '__main__':
         try:
             client.connect("localhost", 6600)
             logging.debug('Connected!')
-            system('aplay -q {}'.format('~/projects/PiMusicBoxTest/sounds/tada.wav'))
+            #system('aplay -q {}'.format('~/projects/PiMusicBoxTest/sounds/tada.wav'))
             break
         except:
             logging.debug('{} try connection failed.'.format(i+1))
