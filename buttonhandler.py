@@ -83,8 +83,11 @@ def signal_handler(sig, frame): #used to close and cleanup GPIO and mopidy mdp c
     client.disconnect()
     sys.exit(0)
 
-def handleButtons():
-    #global client
+if __name__ == '__main__':
+    #pause whole thread until button at pin 4 is pushed => I won't need systemboot.py
+    time.sleep(60)
+
+    global client
     client = MPDClient()
 
     try:

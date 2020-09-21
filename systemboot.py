@@ -1,3 +1,4 @@
+'''
 import buttonhandler as bh
 #from threading import Thread
 import RPi.GPIO as GPIO
@@ -25,3 +26,4 @@ if __name__ == '__main__':
 
     signal.signal(signal.SIGINT, bh.signal_handler)
     signal.pause()
+'''
