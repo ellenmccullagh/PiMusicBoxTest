@@ -86,11 +86,11 @@ def signal_handler(sig, frame): #used to close and cleanup GPIO and mopidy mdp c
 
 if __name__ == '__main__':
     #pause whole thread until button at pin 4 is pushed => I won't need systemboot.py
-    time.sleep(120)
+    #time.sleep(120)
 
     global client
     client = MPDClient()
-    for i in range(2):
+    for i in range(4):
         try:
             client.connect("localhost", 6600)
             logging.debug('Connected!')
