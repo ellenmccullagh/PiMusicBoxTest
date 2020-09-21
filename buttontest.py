@@ -13,7 +13,7 @@ class Button(object):
         self.pin = pin
         self.color = color
         self.sound = sound
-        self.base_path = '~/projects/PiMusicBoxTest/sounds/c'
+        self.base_path = '~/projects/PiMusicBoxTest/sounds/'
         self.status = True #True means unpressed, False means pressed
 
     def playsound(self, channel):

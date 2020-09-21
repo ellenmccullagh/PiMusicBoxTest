@@ -6,6 +6,7 @@ from os import system, path
 from mpd import MPDClient
 from threading import Thread
 import logging
+from os import system
 
 logging.basicConfig(level=logging.DEBUG, filename='playpausetest.log', filemode='w')
 
@@ -85,19 +86,19 @@ def signal_handler(sig, frame): #used to close and cleanup GPIO and mopidy mdp c
 
 if __name__ == '__main__':
     #pause whole thread until button at pin 4 is pushed => I won't need systemboot.py
-    time.sleep(60)
+    time.sleep(120)
 
     global client
     client = MPDClient()
-
-    try:
-        client.connect("localhost", 6600)
-        logging.debug('Connected!')
-    except:
-        logging.debug('First try connection failed.')
-        time.sleep(60)
-        client.connect("localhost", 6600)
-        logging.debug('Second try connection success!')
+    for i in range(2):
+        try:
+            client.connect("localhost", 6600)
+            logging.debug('Connected!')
+            system('aplay -q {}'.format('~/projects/PiMusicBoxTest/sounds/tada.wav'))
+            break
+        except:
+            logging.debug('{} try connection failed.'.format(i+1))
+            time.sleep(30)
 
     client.setvol(60)
     pinging = Thread(target=clientPing)
