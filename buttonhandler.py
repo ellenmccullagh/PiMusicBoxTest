@@ -99,6 +99,7 @@ if __name__ == '__main__':
         client.connect("localhost", 6600)
         logging.debug('Second try connection success!')
 
+    client.setvol(60)
     pinging = Thread(target=clientPing)
     pinging.start()
 
