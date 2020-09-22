@@ -23,7 +23,7 @@ class Button(object):
     def playsound(self, channel): #if the current playlist corresponds to this button, skip to the next track. Otherwise change the playlist and begin playback
         global currentplaylist
         logging.info("Current playlist: {}".format(currentplaylist))
-        print('The next song is number {}'.format(client.status()['nextsong']))
+        #logging.info('The next song is number {}'.format(client.status()['nextsong']))
         if currentplaylist == self.playlist:
             client.next()
             logging.info('{} next track'.format(self.playlist))
