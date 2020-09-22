@@ -114,7 +114,7 @@ if __name__ == '__main__':
 
     #setup stop button
     GPIO.setup(STOP_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.add_event_detect(STOP_BUTTON, GPIO.RISING, stopcallback, bouncetime=300)
+    GPIO.add_event_detect(STOP_BUTTON, GPIO.BOTH, stopcallback, bouncetime=300)
 
     signal.signal(signal.SIGINT, signal_handler)
     signal.pause()
