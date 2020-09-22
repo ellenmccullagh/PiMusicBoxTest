@@ -23,11 +23,12 @@ class Button(object):
     def playsound(self, channel): #if the current playlist corresponds to this button, skip to the next track. Otherwise change the playlist and begin playback
         global currentplaylist
         logging.info("Current playlist: {}".format(currentplaylist))
-
-        if currentplaylist == self.playlist and client.status()['nextsong'] != '0':
+        print('The next song is number {}'.format(client.status()['nextsong']))
+        if currentplaylist == self.playlist:
             client.next()
             logging.info('{} next track'.format(self.playlist))
         else:
+            client.pause()
             client.clear()
             client.add(self.uri)
             client.play()
@@ -88,6 +89,7 @@ if __name__ == '__main__':
     global client
     client = MPDClient()
     for i in range(4):
+        time.sleep(30)
         try:
             client.connect("localhost", 6600)
             logging.debug('Connected!')
@@ -95,7 +97,6 @@ if __name__ == '__main__':
             break
         except:
             logging.debug('{} try connection failed.'.format(i+1))
-            time.sleep(30)
 
     client.setvol(60)
     global pinging
@@ -113,7 +114,7 @@ if __name__ == '__main__':
 
     #setup stop button
     GPIO.setup(STOP_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.add_event_detect(STOP_BUTTON, GPIO.FALLING, stopcallback, bouncetime=300)
+    GPIO.add_event_detect(STOP_BUTTON, GPIO.RISING, stopcallback, bouncetime=300)
 
     signal.signal(signal.SIGINT, signal_handler)
     signal.pause()
