@@ -88,8 +88,7 @@ if __name__ == '__main__':
 
     global client
     client = MPDClient()
-    for i in range(4):
-        time.sleep(30)
+    for i in range(10):
         try:
             client.connect("localhost", 6600)
             logging.debug('Connected!')
@@ -97,6 +96,7 @@ if __name__ == '__main__':
             break
         except:
             logging.debug('{} try connection failed.'.format(i+1))
+            time.sleep(30)
 
     client.setvol(60)
     global pinging
