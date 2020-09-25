@@ -52,16 +52,16 @@ class Button(object):
 
 #Declare all buttons
 BUTTON_PINS = [
-                Button(6, 'Blue', 'Both Frozens', 'spotify:playlist:6gBXZmySP7a6n4PZJhaqYO'),
-                Button(12, 'Green', 'Miles favorites', 'spotify:playlist:1eKf1Q2I7GKi3BfHTNL4Dt'),
-                Button(13, 'Yellow', 'Lullabies for Miles', 'spotify:playlist:22xETQTI3B6RzEdgBqPqXS'),
-                Button(16, 'White', 'Playtime for Miles', 'spotify:playlist:3pByZu2SyYiNlIppLXbUZ7')
+                Button(5, 'Blue', 'Both Frozens', 'spotify:playlist:6gBXZmySP7a6n4PZJhaqYO'),
+                Button(13, 'Green', 'Miles favorites', 'spotify:playlist:1eKf1Q2I7GKi3BfHTNL4Dt'),
+                Button(16, 'Yellow', 'Lullabies for Miles', 'spotify:playlist:22xETQTI3B6RzEdgBqPqXS'),
+                Button(6, 'White', 'Playtime for Miles', 'spotify:playlist:3pByZu2SyYiNlIppLXbUZ7')
                 ]
 
 '''
 Declare pause/resume toggle button pin and callback function
 '''
-STOP_BUTTON = 5
+STOP_BUTTON = 12
 
 def stopcallback(channel):
     if client.status()['state'] == 'play': #playlist is already playing
@@ -88,6 +88,7 @@ if __name__ == '__main__':
 
     global client
     client = MPDClient()
+    #time.sleep(180)
     for i in range(10):
         try:
             client.connect("localhost", 6600)
@@ -97,6 +98,7 @@ if __name__ == '__main__':
         except:
             logging.debug('{} try connection failed.'.format(i+1))
             time.sleep(30)
+
 
     client.setvol(60)
     global pinging
