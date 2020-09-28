@@ -6,7 +6,7 @@ import sys
 from mpd import MPDClient
 from threading import Thread
 import logging
-
+from systemd.journal import JournaldLogHandler
 
 class Button(object):
     '''
@@ -85,7 +85,12 @@ def signal_handler(sig, frame): #used to close and cleanup GPIO and mopidy mdp c
     sys.exit(0)
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG, filename='playpausetest.log', filemode='w')
+    #logging.basicConfig(level=logging.DEBUG, filename='playpausetest.log', filemode='w')
+    logger = logging.getLogger(__name__)
+    journald_handler = JournaldLogHandler()
+    journald_handler.setFormatter(logging.Formatter( '[%(levelname)s] %(message)s'))
+    logger.addHandler(journald_handler)
+    logger.setLevel(logging.DEBUG)
 
     global client
     client = MPDClient()
