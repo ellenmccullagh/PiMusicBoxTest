@@ -7,18 +7,26 @@ from mpd import MPDClient
 from threading import Thread
 import logging
 
-logging.basicConfig(level=logging.DEBUG, filename='playpausetest.log', filemode='w')
 
 class Button(object):
     '''
        Buttons that correspond to playlists
     '''
-    def __init__(self, pin, color, playlist, uri = None):
+    def __init__(self, pin, ledpin, color, playlist, uri = None):
         self.pin = pin
         self.color = color
         self.playlist = playlist
         self.uri = uri
         self.status = True #True means unpressed, False means pressed
+        self.ledpin = ledpin
+        LEDPINS.append(self.ledpin)
+        GPIO.setup(self.ledpin)
+
+    def updatelights(self):
+        for pin in LEDPINS:
+            GPIO.output(pin, 0)
+        GPIO.output(self.ledpin, 1)
+
 
     def playsound(self, channel): #if the current playlist corresponds to this button, skip to the next track. Otherwise change the playlist and begin playback
         global currentplaylist
@@ -27,6 +35,7 @@ class Button(object):
         if currentplaylist == self.playlist:
             client.next()
             logging.info('{} next track'.format(self.playlist))
+            self.updatelights()
         else:
             client.pause()
             client.clear()
@@ -50,18 +59,7 @@ class Button(object):
     def reportColor(self):
         return self.color
 
-#Declare all buttons
-BUTTON_PINS = [
-                Button(5, 'Blue', 'Both Frozens', 'spotify:playlist:6gBXZmySP7a6n4PZJhaqYO'),
-                Button(13, 'Green', 'Miles favorites', 'spotify:playlist:1eKf1Q2I7GKi3BfHTNL4Dt'),
-                Button(16, 'Yellow', 'Lullabies for Miles', 'spotify:playlist:22xETQTI3B6RzEdgBqPqXS'),
-                Button(6, 'White', 'Playtime for Miles', 'spotify:playlist:3pByZu2SyYiNlIppLXbUZ7')
-                ]
 
-'''
-Declare pause/resume toggle button pin and callback function
-'''
-STOP_BUTTON = 12
 
 def stopcallback(channel):
     if client.status()['state'] == 'play': #playlist is already playing
@@ -85,6 +83,7 @@ def signal_handler(sig, frame): #used to close and cleanup GPIO and mopidy mdp c
     sys.exit(0)
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.DEBUG, filename='playpausetest.log', filemode='w')
 
     global client
     client = MPDClient()
@@ -100,19 +99,34 @@ if __name__ == '__main__':
             time.sleep(30)
 
 
+    global LEDPINS
+    LEDPINS = []
+
+    GPIO.setmode(GPIO.BCM)
+
+    #Declare all buttons
+    BUTTON_PINS = [
+                    Button(5, 23, 'Blue', 'Both Frozens', 'spotify:playlist:6gBXZmySP7a6n4PZJhaqYO'),
+                    Button(13, 25, 'Green', 'Miles favorites', 'spotify:playlist:1eKf1Q2I7GKi3BfHTNL4Dt'),
+                    Button(16, 22, 'Yellow', 'Lullabies for Miles', 'spotify:playlist:22xETQTI3B6RzEdgBqPqXS'),
+                    Button(6, 24, 'White', 'Playtime for Miles', 'spotify:playlist:3pByZu2SyYiNlIppLXbUZ7')
+                    ]
+
+    #playpause button
+    STOP_BUTTON = 12
+
+    #ping client to maintain connection
     client.setvol(60)
     global pinging
     pinging = Thread(target=clientPing)
     pinging.start()
-
-    GPIO.setmode(GPIO.BCM)
 
     currentplaylist = 'None'
 
     #setup playback buttons
     for btn in BUTTON_PINS:
         GPIO.setup(btn.pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.add_event_detect(btn.pin, GPIO.FALLING, btn.playsound, bouncetime=300)
+        GPIO.add_event_detect(btn.pin, GPIO.FALLING, btn.playsound, bouncetime=1000)
 
     #setup stop button
     GPIO.setup(STOP_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
