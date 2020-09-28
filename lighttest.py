@@ -12,6 +12,7 @@ pins = [25, 24, 23, 22, 21]
 'side leds': 21
 }
 '''
+time.sleep(2)
 
 for pin in pins:
     GPIO.setup(pin, GPIO.OUT)
@@ -19,5 +20,5 @@ for pin in pins:
 
 for pin in pins:
     GPIO.output(pin, 1)
-    time.sleep(1)
+    time.sleep(3)
     GPIO.output(pin, 0)
