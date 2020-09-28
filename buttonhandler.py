@@ -20,7 +20,7 @@ class Button(object):
         self.status = True #True means unpressed, False means pressed
         self.ledpin = ledpin
         LEDPINS.append(self.ledpin)
-        GPIO.setup(self.ledpin)
+        GPIO.setup(self.ledpin, GPIO.OUT)
         GPIO.setup(self.pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.add_event_detect(self.pin, GPIO.FALLING, self.playsound, bouncetime=1000)
 
