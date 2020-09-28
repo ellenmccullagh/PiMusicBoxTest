@@ -21,6 +21,8 @@ class Button(object):
         self.ledpin = ledpin
         LEDPINS.append(self.ledpin)
         GPIO.setup(self.ledpin)
+        GPIO.setup(self.pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.add_event_detect(self.pin, GPIO.FALLING, self.playsound, bouncetime=1000)
 
     def updatelights(self):
         for pin in LEDPINS:
@@ -103,6 +105,13 @@ if __name__ == '__main__':
     LEDPINS = []
 
     GPIO.setmode(GPIO.BCM)
+    currentplaylist = 'None'
+
+    #ping client to maintain connection
+    client.setvol(60)
+    global pinging
+    pinging = Thread(target=clientPing)
+    pinging.start()
 
     #Declare all buttons
     BUTTON_PINS = [
@@ -115,18 +124,9 @@ if __name__ == '__main__':
     #playpause button
     STOP_BUTTON = 12
 
-    #ping client to maintain connection
-    client.setvol(60)
-    global pinging
-    pinging = Thread(target=clientPing)
-    pinging.start()
-
-    currentplaylist = 'None'
-
     #setup playback buttons
-    for btn in BUTTON_PINS:
-        GPIO.setup(btn.pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.add_event_detect(btn.pin, GPIO.FALLING, btn.playsound, bouncetime=1000)
+    #for btn in BUTTON_PINS:
+
 
     #setup stop button
     GPIO.setup(STOP_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
