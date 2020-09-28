@@ -3,13 +3,15 @@ import time
 
 GPIO.setmode(GPIO.BCM)
 
-pins = {
+pins = [25, 24, 23, 22, 21]
+'''{
 'blue button light':25,
 'yellow button light': 24,
 'green button light': 23,
 'white button light': 22,
 'side leds': 21
 }
+'''
 
 for pin in pins:
     GPIO.setup(pin, GPIO.OUT)
