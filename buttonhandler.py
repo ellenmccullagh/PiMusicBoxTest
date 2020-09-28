@@ -34,17 +34,17 @@ class Button(object):
         global currentplaylist
         logging.info("Current playlist: {}".format(currentplaylist))
         #logging.info('The next song is number {}'.format(client.status()['nextsong']))
-        if currentplaylist == self.playlist:
+        if currentplaylist == self.playlist: #I am the current playlist
             client.next()
             logging.info('{} next track'.format(self.playlist))
-            self.updatelights()
-        else:
+        else: #I am not the current playlist
             client.pause()
             client.clear()
             client.add(self.uri)
             client.play()
             logging.info('{} playing'.format(self.playlist))
             currentplaylist = self.playlist
+            self.updatelights()
         pass
 
     def seturi(self, uri):
