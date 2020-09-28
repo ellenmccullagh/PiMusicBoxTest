@@ -91,6 +91,7 @@ if __name__ == '__main__':
     journald_handler.setFormatter(logging.Formatter( '[%(levelname)s] %(message)s'))
     logger.addHandler(journald_handler)
     logger.setLevel(logging.DEBUG)
+    logging.info('Logging established')
 
     global client
     client = MPDClient()
