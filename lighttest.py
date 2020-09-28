@@ -3,7 +3,7 @@ import time
 
 GPIO.setmode(GPIO.BCM)
 
-Pins = {
+pins = {
 'blue button light':25,
 'yellow button light': 24,
 'green button light': 23,
