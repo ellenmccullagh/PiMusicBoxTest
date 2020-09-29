@@ -33,17 +33,17 @@ class Button(object):
 
     def playsound(self, channel): #if the current playlist corresponds to this button, skip to the next track. Otherwise change the playlist and begin playback
         global currentplaylist
-        logging.info("Current playlist: {}".format(currentplaylist))
+        log.info("Current playlist: {}".format(currentplaylist))
         #logging.info('The next song is number {}'.format(client.status()['nextsong']))
         if currentplaylist == self.playlist: #I am the current playlist
             client.next()
-            logging.info('{} next track'.format(self.playlist))
+            log.info('{} next track'.format(self.playlist))
         else: #I am not the current playlist
             client.pause()
             client.clear()
             client.add(self.uri)
             client.play()
-            logging.info('{} playing'.format(self.playlist))
+            log.info('{} playing'.format(self.playlist))
             currentplaylist = self.playlist
             self.updatelights()
         pass
@@ -67,10 +67,10 @@ class Button(object):
 def stopcallback(channel):
     if client.status()['state'] == 'play': #playlist is already playing
         client.pause()
-        logging.info('Paused')
+        log.info('Paused')
     elif client.status()['state'] == 'pause': #playlist is paused
         client.play()
-        logging.info('Resumed')
+        log.info('Resumed')
 
 def clientPing(): #avoid client disconnect by pinging regularly.
     while True:
@@ -105,11 +105,11 @@ if __name__ == '__main__':
     for i in range(10):
         try:
             client.connect("localhost", 6600)
-            logging.debug('Connected!')
+            log.debug('Connected!')
             #system('aplay -q {}'.format('~/projects/PiMusicBoxTest/sounds/tada.wav'))
             break
         except:
-            logging.debug('{} try connection failed.'.format(i+1))
+            log.debug('{} try connection failed.'.format(i+1))
             time.sleep(30)
 
 
