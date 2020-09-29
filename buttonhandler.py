@@ -86,7 +86,7 @@ def signal_handler(sig, frame): #used to close and cleanup GPIO and mopidy mdp c
 
 if __name__ == '__main__':
     #logging.basicConfig(level=logging.DEBUG, filename='playpausetest.log', filemode='w')
-    logger = logging.getLogger(__name__)
+    logger = logging.getLogger('buttonhandler')
     journald_handler = JournaldLogHandler()
     journald_handler.setFormatter(logging.Formatter( '[%(levelname)s] %(message)s'))
     logger.addHandler(journald_handler)
