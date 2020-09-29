@@ -130,7 +130,7 @@ if __name__ == '__main__':
                     Button(5, 23, 'Blue', 'Both Frozens', 'spotify:playlist:6gBXZmySP7a6n4PZJhaqYO'),
                     Button(13, 25, 'Green', 'Miles favorites', 'spotify:playlist:1eKf1Q2I7GKi3BfHTNL4Dt'),
                     Button(16, 22, 'Yellow', 'Lullabies for Miles', 'spotify:playlist:22xETQTI3B6RzEdgBqPqXS'),
-                    Button(6, 24, 'White', 'Listen and Play Podcast', 'spotify:show:6NEs2aWiXSmXWoTRFh8fUN') #playtime for miles: spotify:playlist:3pByZu2SyYiNlIppLXbUZ7
+                    Button(6, 24, 'White', 'Listen and Play Podcast', 'spotify:episode:4o6AQImkGJTCug86dyRSQ4') #playtime for miles: spotify:playlist:3pByZu2SyYiNlIppLXbUZ7
                     ]
 
     #playpause button
