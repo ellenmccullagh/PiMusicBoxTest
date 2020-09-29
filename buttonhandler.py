@@ -91,13 +91,12 @@ if __name__ == '__main__':
 
     log = logging.getLogger('demo')
     log.addHandler(journal.JournaldLogHandler())
-    log.setLevel(logging.INFO)
+    log.setLevel(logging.DEBUG)
     log.info("sent to journal")
     # logger = logging.getLogger('buttonhandler')
     # journald_handler = JournaldLogHandler()
     # journald_handler.setFormatter(logging.Formatter( '[%(levelname)s] %(message)s'))
     # logger.addHandler(journald_handler)
-    # logger.setLevel(logging.DEBUG)
     # logging.info('Logging established')
 
     global client
