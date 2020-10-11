@@ -143,7 +143,7 @@ if __name__ == '__main__':
     # pinging = Thread(target=clientPing)
     # pinging.start()
 
-    #Declare all buttons
+    #Declare all buttons. GPIO event established in object init
     BUTTON_PINS = [
                     Button(5, 23, 'Blue', 'Both Frozens', 'spotify:playlist:6gBXZmySP7a6n4PZJhaqYO'),
                     Button(13, 25, 'Green', 'Miles favorites', 'spotify:playlist:1eKf1Q2I7GKi3BfHTNL4Dt'),
@@ -154,18 +154,18 @@ if __name__ == '__main__':
     #playpause button
     STOP_BUTTON = 12
 
-    #Connect to Mopidy
+    #Wait until red button is pushed
+    GPIO.setup(STOP_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     while GPIO.input(STOP_BUTTON) == GPIO.LOW:
         time.sleep(0.1)
+    log.info('Begin connection')
+    #GPIO.cleanup()
+    #connect to mopidy using mpd client
     try:
         client.connect("localhost", 6600)
         log.info('Established connection')
     except:
         log.info('Connection failed (1)')
-
-    #setup playback buttons
-    #for btn in BUTTON_PINS:
-
 
     #setup stop button
     GPIO.setup(STOP_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
