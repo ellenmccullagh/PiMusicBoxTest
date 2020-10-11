@@ -36,11 +36,16 @@ class Button(object):
         log.info("Current playlist: {}".format(currentplaylist))
         #logging.info('The next song is number {}'.format(client.status()['nextsong']))
 
+        #Check mopidy connection and reconnect if disconnected
         try:
-            client.connect("localhost", 6600)
+            client.ping()
             log.info("connected")
         except:
-            log.info("Connection failed")
+            try:
+                client.connect("localhost", 6600)
+                log.info("Reestablished connection")
+            except:
+                log.info("Connection failed (2)")
 
         client.setvol(60)
 
@@ -113,6 +118,7 @@ if __name__ == '__main__':
 
     global client
     client = MPDClient()
+
     #time.sleep(180)
     # for i in range(10):
     #     try:
@@ -147,6 +153,15 @@ if __name__ == '__main__':
 
     #playpause button
     STOP_BUTTON = 12
+
+    #Connect to Mopidy
+    while GPIO.input(STOP_BUTTON) == GPIO.LOW:
+        time.sleep(0.1)
+    try:
+        client.connect("localhost", 6600)
+        log.info('Established connection')
+    except:
+        log.info('Connection failed (1)')
 
     #setup playback buttons
     #for btn in BUTTON_PINS:
