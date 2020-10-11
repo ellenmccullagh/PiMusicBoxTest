@@ -149,7 +149,7 @@ if __name__ == '__main__':
 
     #Wait until red button is pushed to start connection etc.
     GPIO.setup(STOP_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    while GPIO.input(STOP_BUTTON) == GPIO.LOW:
+    while GPIO.input(STOP_BUTTON) == GPIO.HIGH:
         time.sleep(0.1)
     log.info('Begin connection')
 
