@@ -42,6 +42,8 @@ class Button(object):
         except:
             log.info("Connection failed")
 
+        client.setvol(60)
+
         if currentplaylist == self.playlist: #I am the current playlist
             client.next()
             log.info('{} next track'.format(self.playlist))
@@ -130,7 +132,7 @@ if __name__ == '__main__':
     currentplaylist = 'None'
 
     #ping client to maintain connection
-    client.setvol(60)
+
     # global pinging
     # pinging = Thread(target=clientPing)
     # pinging.start()
