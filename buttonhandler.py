@@ -2,11 +2,9 @@ import RPi.GPIO as GPIO
 import time
 import signal
 import sys
-#from os import system, path
 from mpd import MPDClient
 from threading import Thread
 import logging
-#from systemd.journal import JournaldLogHandler
 from systemd import journal
 
 class Button(object):
@@ -31,15 +29,19 @@ class Button(object):
         GPIO.output(self.ledpin, 1)
 
 
-    def playsound(self, channel): #if the current playlist corresponds to this button, skip to the next track. Otherwise change the playlist and begin playback
+    def playsound(self, channel):
+        '''
+        If the current playlist corresponds to this button, skip to the next track.
+        Otherwise change the playlist and begin playback
+        '''
+
         global currentplaylist
         log.info("Current playlist: {}".format(currentplaylist))
-        #logging.info('The next song is number {}'.format(client.status()['nextsong']))
 
         #Check mopidy connection and reconnect if disconnected
         try:
             client.ping()
-            log.info("connected")
+            log.info("Already connected")
         except:
             try:
                 client.connect("localhost", 6600)
@@ -106,15 +108,10 @@ if __name__ == '__main__':
     #logging.basicConfig(level=logging.DEBUG, filename='playpausetest.log', filemode='w')
 
 
-    log = logging.getLogger('demo')
+    log = logging.getLogger('musicbox')
     log.addHandler(journal.JournaldLogHandler())
     log.setLevel(logging.DEBUG)
     log.info("sent to journal")
-    # logger = logging.getLogger('buttonhandler')
-    # journald_handler = JournaldLogHandler()
-    # journald_handler.setFormatter(logging.Formatter( '[%(levelname)s] %(message)s'))
-    # logger.addHandler(journald_handler)
-    # logging.info('Logging established')
 
     global client
     client = MPDClient()
@@ -164,7 +161,7 @@ if __name__ == '__main__':
     GPIO.setup(STOP_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.add_event_detect(STOP_BUTTON, GPIO.BOTH, stopcallback, bouncetime=1000)
 
-    #Declare all buttons. GPIO event established in object init
+    #Declare all playlist buttons. GPIO event established in object init
     BUTTON_PINS = [
                     Button(5, 23, 'Blue', 'Both Frozens', 'spotify:playlist:6gBXZmySP7a6n4PZJhaqYO'),
                     Button(13, 25, 'Green', 'Miles favorites', 'spotify:playlist:1eKf1Q2I7GKi3BfHTNL4Dt'),
