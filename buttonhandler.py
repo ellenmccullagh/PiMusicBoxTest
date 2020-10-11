@@ -35,6 +35,13 @@ class Button(object):
         global currentplaylist
         log.info("Current playlist: {}".format(currentplaylist))
         #logging.info('The next song is number {}'.format(client.status()['nextsong']))
+
+        try:
+            client.connect("localhost", 6600)
+            log.info("connected")
+        except:
+            log.info("Connection failed")
+
         if currentplaylist == self.playlist: #I am the current playlist
             client.next()
             log.info('{} next track'.format(self.playlist))
@@ -42,10 +49,13 @@ class Button(object):
             client.pause()
             client.clear()
             client.add(self.uri)
+            time.sleep(0.1)
             client.play()
             log.info('{} playing'.format(self.playlist))
             currentplaylist = self.playlist
             self.updatelights()
+
+        client.disconnect()
         pass
 
     def seturi(self, uri):
@@ -82,7 +92,7 @@ def signal_handler(sig, frame): #used to close and cleanup GPIO and mopidy mdp c
     client.pause()
     client.close()
     client.disconnect()
-    pinging.join()
+    #pinging.join()
     sys.exit(0)
 
 if __name__ == '__main__':
@@ -102,15 +112,15 @@ if __name__ == '__main__':
     global client
     client = MPDClient()
     #time.sleep(180)
-    for i in range(10):
-        try:
-            client.connect("localhost", 6600)
-            log.debug('Connected!')
-            #system('aplay -q {}'.format('~/projects/PiMusicBoxTest/sounds/tada.wav'))
-            break
-        except:
-            log.debug('{} try connection failed.'.format(i+1))
-            time.sleep(30)
+    # for i in range(10):
+    #     try:
+    #         client.connect("localhost", 6600)
+    #         log.debug('Connected!')
+    #         #system('aplay -q {}'.format('~/projects/PiMusicBoxTest/sounds/tada.wav'))
+    #         break
+    #     except:
+    #         log.debug('{} try connection failed.'.format(i+1))
+    #         time.sleep(30)
 
 
     global LEDPINS
@@ -121,9 +131,9 @@ if __name__ == '__main__':
 
     #ping client to maintain connection
     client.setvol(60)
-    global pinging
-    pinging = Thread(target=clientPing)
-    pinging.start()
+    # global pinging
+    # pinging = Thread(target=clientPing)
+    # pinging.start()
 
     #Declare all buttons
     BUTTON_PINS = [
