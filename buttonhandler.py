@@ -143,23 +143,16 @@ if __name__ == '__main__':
     # pinging = Thread(target=clientPing)
     # pinging.start()
 
-    #Declare all buttons. GPIO event established in object init
-    BUTTON_PINS = [
-                    Button(5, 23, 'Blue', 'Both Frozens', 'spotify:playlist:6gBXZmySP7a6n4PZJhaqYO'),
-                    Button(13, 25, 'Green', 'Miles favorites', 'spotify:playlist:1eKf1Q2I7GKi3BfHTNL4Dt'),
-                    Button(16, 22, 'Yellow', 'Lullabies for Miles', 'spotify:playlist:22xETQTI3B6RzEdgBqPqXS'),
-                    Button(6, 24, 'White', 'Stories', 'spotify:playlist:7yYG0ULqH3D2NXiCG3HBOE') #playtime for miles: spotify:playlist:3pByZu2SyYiNlIppLXbUZ7 old stories playlist: spotify:playlist:0IJH6tPwq2lns377i4YvMd
-                    ]
 
     #playpause button
     STOP_BUTTON = 12
 
-    #Wait until red button is pushed
-    GPIO.setup(STOP_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    #Wait until red button is pushed to start connection etc.
+    GPIO.setup(STOP_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     while GPIO.input(STOP_BUTTON) == GPIO.LOW:
         time.sleep(0.1)
     log.info('Begin connection')
-    #GPIO.cleanup()
+
     #connect to mopidy using mpd client
     try:
         client.connect("localhost", 6600)
@@ -170,6 +163,15 @@ if __name__ == '__main__':
     #setup stop button
     GPIO.setup(STOP_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.add_event_detect(STOP_BUTTON, GPIO.BOTH, stopcallback, bouncetime=1000)
+
+    #Declare all buttons. GPIO event established in object init
+    BUTTON_PINS = [
+                    Button(5, 23, 'Blue', 'Both Frozens', 'spotify:playlist:6gBXZmySP7a6n4PZJhaqYO'),
+                    Button(13, 25, 'Green', 'Miles favorites', 'spotify:playlist:1eKf1Q2I7GKi3BfHTNL4Dt'),
+                    Button(16, 22, 'Yellow', 'Lullabies for Miles', 'spotify:playlist:22xETQTI3B6RzEdgBqPqXS'),
+                    Button(6, 24, 'White', 'Stories', 'spotify:playlist:7yYG0ULqH3D2NXiCG3HBOE') #playtime for miles: spotify:playlist:3pByZu2SyYiNlIppLXbUZ7 old stories playlist: spotify:playlist:0IJH6tPwq2lns377i4YvMd
+                    ]
+
 
     signal.signal(signal.SIGINT, signal_handler)
     signal.pause()
