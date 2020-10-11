@@ -84,6 +84,18 @@ class Button(object):
 
 
 def stopcallback(channel):
+    #check connection
+    try:
+        client.ping()
+        log.info("Already connected")
+    except:
+        try:
+            client.connect("localhost", 6600)
+            log.info("Reestablished connection (3)")
+        except:
+            log.info("Connection failed (3)")
+
+    #play pause
     if client.status()['state'] == 'play': #playlist is already playing
         client.pause()
         log.info('Paused')
