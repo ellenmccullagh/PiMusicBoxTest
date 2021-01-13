@@ -178,7 +178,7 @@ if __name__ == '__main__':
                     Button(5, 23, 'Blue', 'Both Frozens', 'spotify:playlist:6gBXZmySP7a6n4PZJhaqYO'),
                     Button(13, 25, 'Green', 'Miles favorites', 'spotify:playlist:1eKf1Q2I7GKi3BfHTNL4Dt'),
                     Button(16, 22, 'Yellow', 'Lullabies for Miles', 'spotify:playlist:22xETQTI3B6RzEdgBqPqXS'),
-                    Button(6, 24, 'White', 'Stories', 'spotify:playlist:7yYG0ULqH3D2NXiCG3HBOE') #playtime for miles: spotify:playlist:3pByZu2SyYiNlIppLXbUZ7 old stories playlist: spotify:playlist:0IJH6tPwq2lns377i4YvMd
+                    Button(6, 24, 'White', 'Stories', 'spotify:playlist:37i9dQZF1DXb9DmOVVVkdh' #'spotify:playlist:7yYG0ULqH3D2NXiCG3HBOE') #playtime for miles: spotify:playlist:3pByZu2SyYiNlIppLXbUZ7 old stories playlist: spotify:playlist:0IJH6tPwq2lns377i4YvMd
                     ]
 
 
