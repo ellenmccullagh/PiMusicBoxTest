@@ -178,9 +178,9 @@ if __name__ == '__main__':
                     Button(5, 23, 'Blue', 'Both Frozens', 'spotify:playlist:6gBXZmySP7a6n4PZJhaqYO'),
                     Button(13, 25, 'Green', 'Miles favorites', 'spotify:playlist:1eKf1Q2I7GKi3BfHTNL4Dt'),
                     Button(16, 22, 'Yellow', 'Lullabies for Miles', 'spotify:playlist:22xETQTI3B6RzEdgBqPqXS'),
-                    Button(6, 24, 'White', 'Stories', 'https://dts.podtrac.com/redirect.mp3/traffic.megaphone.fm/BUR2983452505.mp3')
+                    Button(6, 24, 'White', 'Stories', 'spotify:playlist:4NgUcY49vn30QW2LIyW3b3')
                     #spotify:playlist:0C7SxyofEe3bAWqxmyhruA' )#'spotify:playlist:7yYG0ULqH3D2NXiCG3HBOE') #playtime for miles: spotify:playlist:3pByZu2SyYiNlIppLXbUZ7 old stories playlist: spotify:playlist:0IJH6tPwq2lns377i4YvMd
-                    ]
+                    ] 
 
 
     signal.signal(signal.SIGINT, signal_handler)
