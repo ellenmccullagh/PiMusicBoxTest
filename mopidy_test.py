@@ -16,7 +16,10 @@ def main():
     client = MPDClient()
 
     currentplaylist = 'spotify:album:25L8ck3KGcmCo3901ztPzR'
-
+    client.add(currentplaylist)
+    client.next()
+    client.play()
+    
     try:
         client.connect("localhost", 6600)
         log.info('Established connection')
