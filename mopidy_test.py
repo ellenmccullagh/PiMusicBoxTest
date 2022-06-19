@@ -15,7 +15,7 @@ log.info("Starting Mopidy Test")
 def main():
     client = MPDClient()
 
-    currentplaylist = 'spotify:album:25L8ck3KGcmCo3901ztPzR'
+    currentplaylist = 'spotify:playlist:1eKf1Q2I7GKi3BfHTNL4Dt'
     client.add(currentplaylist)
     client.next()
     client.play()
