@@ -24,7 +24,7 @@ def main():
     except:
         log.info('Connection failed (1)')
 
-    client.add(mp3)
+    client.add(currentplaylist)
     # client.next()
     client.play()
     
