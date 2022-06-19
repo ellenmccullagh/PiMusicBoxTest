@@ -17,15 +17,17 @@ def main():
 
     currentplaylist = 'https://soundcloud.com/discover/sets/track-stations:1080912754'
     mp3 = 'http://www.hyperion-records.co.uk/audiotest/3%20Schubert%20String%20Quartet%20No%2014%20in%20D%20minor%20Death%20and%20the%20Maiden,%20D810%20-%20Movement%203%20Scherzo%20Allegro%20molto.MP3'
-    client.add(mp3)
-    # client.next()
-    client.play()
     
     try:
         client.connect("localhost", 6600)
         log.info('Established connection')
     except:
         log.info('Connection failed (1)')
+
+    client.add(mp3)
+    # client.next()
+    client.play()
+    
 
 if __name__ == '__main__':
     main()
