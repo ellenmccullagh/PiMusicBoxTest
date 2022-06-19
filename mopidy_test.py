@@ -10,5 +10,18 @@ logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger('musicbox')
 
 log.info("Starting Mopidy Test")
-client = MPDClient()
 
+#connect to mopidy using mpd client
+def main():
+    client = MPDClient()
+
+    currentplaylist = 'spotify:album:25L8ck3KGcmCo3901ztPzR'
+
+    try:
+        client.connect("localhost", 6600)
+        log.info('Established connection')
+    except:
+        log.info('Connection failed (1)')
+
+if __name__ == '__main__':
+    main()
