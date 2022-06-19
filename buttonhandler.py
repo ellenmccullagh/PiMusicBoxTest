@@ -7,6 +7,8 @@ from threading import Thread
 import logging
 from systemd import journal
 
+logging.basicConfig(level=logging.DEBUG)
+
 class Button(object):
     '''
        Buttons that correspond to playlists
