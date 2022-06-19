@@ -9,3 +9,6 @@ logging.basicConfig(level=logging.DEBUG)
 
 log = logging.getLogger('musicbox')
 
+log.info("Starting Mopidy Test")
+client = MPDClient()
+

@@ -59,6 +59,7 @@ class Button(object):
         else: #I am not the current playlist
             client.pause()
             client.clear()
+            
             client.add(self.uri)
             time.sleep(0.1)
             client.play()
