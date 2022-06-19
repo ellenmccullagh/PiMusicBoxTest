@@ -1,0 +1,1 @@
+INFO:mpd.base:Calling MPD connect('localhost', 6600, timeout=None) DEBUG:root:Connected! DEBUG:mpd.base:Calling MPD setvol(60,) DEBUG:mpd.base:Calling MPD ping()
