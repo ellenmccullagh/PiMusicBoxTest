@@ -24,8 +24,10 @@ def main():
     except:
         log.info('Connection failed (1)')
 
+    client.pause()
+    client.clear()
     client.add(currentplaylist)
-    # client.next()
+    client.next()
     client.play()
     
 
