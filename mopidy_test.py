@@ -27,7 +27,7 @@ def main():
     client.pause()
     client.clear()
     client.setvol(60)
-    client.add(currentplaylist)
+    client.add(mp3)
     # client.next()
     client.play()
     
