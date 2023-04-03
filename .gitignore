@@ -4,3 +4,4 @@ __pycache__/*
 *.pyc
 music/
 .DS_Store
+*/.DS_Store
