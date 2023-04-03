@@ -131,18 +131,6 @@ if __name__ == '__main__':
     global client
     client = MPDClient()
 
-    #time.sleep(180)
-    # for i in range(10):
-    #     try:
-    #         client.connect("localhost", 6600)
-    #         log.debug('Connected!')
-    #         #system('aplay -q {}'.format('~/projects/PiMusicBoxTest/sounds/tada.wav'))
-    #         break
-    #     except:
-    #         log.debug('{} try connection failed.'.format(i+1))
-    #         time.sleep(30)
-
-
     global LEDPINS
     LEDPINS = []
 
@@ -178,7 +166,7 @@ if __name__ == '__main__':
 
     #Declare all playlist buttons. GPIO event established in object init
     BUTTON_PINS = [
-                    Button(5, 23, 'Blue', 'Encanto', 'spotify:album:25L8ck3KGcmCo3901ztPzR'),
+                    Button(5, 23, 'Blue', 'test_1', "m3u:test.m3u8"),
                     Button(13, 25, 'Green', 'Miles favorites', 'spotify:playlist:1eKf1Q2I7GKi3BfHTNL4Dt'),
                     Button(16, 22, 'Yellow', 'Lullabies for Miles', 'spotify:playlist:22xETQTI3B6RzEdgBqPqXS'),
                     Button(6, 24, 'White', 'Stories', 'spotify:playlist:4NgUcY49vn30QW2LIyW3b3')
@@ -188,3 +176,4 @@ if __name__ == '__main__':
 
     signal.signal(signal.SIGINT, signal_handler)
     signal.pause()
+    
