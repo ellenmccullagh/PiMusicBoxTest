@@ -148,6 +148,7 @@ if __name__ == '__main__':
     STOP_BUTTON = 12
 
     #Wait until red button is pushed to start connection etc.
+    log.info("Wait until red button is pushed to start connection etc.")
     GPIO.setup(STOP_BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     while GPIO.input(STOP_BUTTON) == GPIO.HIGH:
         time.sleep(0.1)
